@@ -1,9 +1,12 @@
 <?php
 
-$base_url="http://".$_SERVER['SERVER_NAME'].dirname($_SERVER["REQUEST_URI"].'?').'/';
-$url="https://play.google.com/store/books/details/Dmitri_Popov_Tokyo_Taxi_Lights?id=XnwnDwAAQBAJ";
-$title="Tōkyō Taxi Lights";
-$description="Tōkyō Taxi Lights photo book companion app";
+$base_url = "http://".$_SERVER['SERVER_NAME'].dirname($_SERVER["REQUEST_URI"].'?').'/';
+
+//User-defined values
+$url = "https://play.google.com/store/books/details/Dmitri_Popov_Tokyo_Taxi_Lights?id=XnwnDwAAQBAJ";
+$title = "Tōkyō Taxi Lights";
+$description = "Tōkyō Taxi Lights photo book companion app";
+$number = 5; // number of photos to display
 
 echo <<< EOT
     {
@@ -48,15 +51,22 @@ echo <<< EOT
 	"items": [
 EOT;
 
+// Read all files in the directory into the $files array
 $files = array();
 foreach (glob("*.jpeg") as $file) {
   $files[] = $file;
 }
 
+// To pick a specified number of random files, shuffle and slice the array
+shuffle($files);
+$files = array_slice($files, -$number);
+
+// Pop the last array item as it has to be formatted differently
 $last_item=array_pop($files);
 
 foreach ($files as &$file) {
 
+// If the php_exif extension is loaded, read the contents of the EXIF comment field
 if(extension_loaded("exif")) {
 	$exif = exif_read_data($file,'EXIF',true);
 	$comment=$exif['COMMENT']['0'];

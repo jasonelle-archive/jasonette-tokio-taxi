@@ -28,7 +28,7 @@ echo <<< EOT
       "header": {
         "title": "$title",
 	"style": {
-          "font": "Lato Bold",
+          "font": "Lato",
           "size": "25"
         },
         "menu": {
@@ -38,8 +38,8 @@ echo <<< EOT
             "view": "web"
           },
           "style": {
-            "font": "Lato Bold",
-            "size": "35"
+            "font": "Lato",
+            "size": "31"
           }
         }
       },

@@ -16,9 +16,6 @@ echo <<< EOT
       "title": "$title",
       "description": "$description",
       "actions": {
-        "\$show": {
-          "type": "\$render"
-                  },
         "\$pull": {
           "type": "\$reload"
                   }

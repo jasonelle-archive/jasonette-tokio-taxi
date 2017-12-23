@@ -73,24 +73,19 @@ $last_item=array_pop($files);
 foreach ($files as &$file) {
 
 // If the php_exif extension is loaded, read the contents of the EXIF comment field
-if(extension_loaded("exif")) {
-	$exif = exif_read_data($file,'EXIF',true);
-	$comment=$exif['COMMENT']['0'];
-} else {
-// $exif = false;
-$comment="$file";
-}
+    //if(extension_loaded("exif")) {
+	//$exif = exif_read_data($file,'EXIF',true);
+	//$comment=$exif['COMMENT']['0'];
+    //} else {
+    // $exif = false;
+    //$comment="$file";
+    //}
 
 echo <<< EOT
     {
 	"type": "image",
         "url": "$base_url$file",
         "class": "image"
-            },
-	    {
-              "type": "label",
-              "text": "$comment",
-              "class": "caption"
             },
 EOT;
 	    }

@@ -1,13 +1,12 @@
 
 <?php
-
 $base_url = "http://".$_SERVER['SERVER_NAME'].dirname($_SERVER["REQUEST_URI"].'?').'/';
-
 //User-defined values
 $url = "https://play.google.com/store/books/details/Dmitri_Popov_Tokyo_Taxi_Lights?id=XnwnDwAAQBAJ";
 $title = "Tōkyō Taxi Lights";
 $description = "Tōkyō Taxi Lights photo book companion app";
 $number = 5; // number of photos to display
+$ext = "*.jpeg"; // File extension with the wild card
 
 echo <<< EOT
     {
@@ -22,12 +21,6 @@ echo <<< EOT
         },
       "offline": "true",
       "styles": {
-        "caption": {
-          "font": "Lato",
-          "size": "13",
-          "align": "center",
-          "spacing": "15"
-        },
         "image": {
           "width": "100%"
         }
@@ -59,7 +52,7 @@ EOT;
 
 // Read all files in the directory into the $files array
 $files = array();
-foreach (glob("*.jpeg") as $file) {
+foreach (glob($ext) as $file) {
   $files[] = $file;
 }
 
@@ -71,16 +64,6 @@ $files = array_slice($files, -$number);
 $last_item=array_pop($files);
 
 foreach ($files as &$file) {
-
-// If the php_exif extension is loaded, read the contents of the EXIF comment field
-    //if(extension_loaded("exif")) {
-	//$exif = exif_read_data($file,'EXIF',true);
-	//$comment=$exif['COMMENT']['0'];
-    //} else {
-    // $exif = false;
-    //$comment="$file";
-    //}
-
 echo <<< EOT
     {
 	"type": "image",
@@ -89,17 +72,11 @@ echo <<< EOT
             },
 EOT;
 	    }
-
 echo <<< EOT
 {
 	"type": "image",
         "url": "$base_url$last_item",
         "class": "image"
-            },
-	    {
-              "type": "label",
-              "text": "$comment",
-              "class": "caption"
             }
           ]
         }
@@ -108,5 +85,4 @@ echo <<< EOT
   }
 }
 EOT;
-
 ?>

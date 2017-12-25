@@ -21,6 +21,12 @@ echo <<< EOT
         },
       "offline": "true",
       "styles": {
+       "caption": {
+          "font": "Lato",
+          "size": "13",
+          "align": "center",
+          "spacing": "15"
+        },
         "image": {
           "width": "100%"
         }
@@ -60,23 +66,52 @@ foreach (glob($ext) as $file) {
 shuffle($files);
 $files = array_slice($files, -$number);
 
-// Pop the last array item as it has to be formatted differently
-$last_item=array_pop($files);
+// Check whether the last photo has the accompanying text file,
+// then read the file's contents into the $end_caption variable.
+// If the file doesn't exist, set $end_caption to the file name.
+// $end_caption is formatted differently.
+$end_txt = pathinfo(end($files), PATHINFO_FILENAME).".txt";
+if (file_exists($end_txt)) {
+    $end_caption = file_get_contents($end_txt);
+    } else {
+    $end_caption = pathinfo(end($files), PATHINFO_FILENAME);
+    }
 
 foreach ($files as &$file) {
+
+    // Check whether a photo has the accompanying text file,
+    // then read the file's contents into the $caption variable.
+    // If the file doesn't exist, set $caption to the file name.
+    $txt = pathinfo($file, PATHINFO_FILENAME).".txt";
+    if (file_exists($txt)) {
+        $caption = file_get_contents($txt);
+    } else {
+        $caption = pathinfo($file, PATHINFO_FILENAME);
+    }
+
 echo <<< EOT
     {
 	"type": "image",
         "url": "$base_url$file",
         "class": "image"
             },
+    {
+    "type": "label",
+        "text": "$caption",
+        "class": "caption"
+            },
 EOT;
 	    }
 echo <<< EOT
-{
-	"type": "image",
-        "url": "$base_url$last_item",
-        "class": "image"
+    {
+    "type": "label",
+        "text": "🚕",
+        "style": {
+          "font": "Lato",
+          "size": "19",
+          "align": "center",
+          "spacing": "15"
+        }
             }
           ]
         }

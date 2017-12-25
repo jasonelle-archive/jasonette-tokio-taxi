@@ -1,4 +1,3 @@
-
 <?php
 $base_url = "http://".$_SERVER['SERVER_NAME'].dirname($_SERVER["REQUEST_URI"].'?').'/';
 //User-defined values
@@ -23,9 +22,8 @@ echo <<< EOT
       "styles": {
        "caption": {
           "font": "Lato",
-          "size": "13",
-          "align": "center",
-          "spacing": "15"
+          "size": "17",
+          "align": "center"
         },
         "image": {
           "width": "100%"
@@ -72,7 +70,7 @@ $files = array_slice($files, -$number);
 // $end_caption is formatted differently.
 $end_txt = pathinfo(end($files), PATHINFO_FILENAME).".txt";
 if (file_exists($end_txt)) {
-    $end_caption = file_get_contents($end_txt);
+    $end_caption = rtrim(file_get_contents($end_txt));
     } else {
     $end_caption = pathinfo(end($files), PATHINFO_FILENAME);
     }
@@ -84,9 +82,9 @@ foreach ($files as &$file) {
     // If the file doesn't exist, set $caption to the file name.
     $txt = pathinfo($file, PATHINFO_FILENAME).".txt";
     if (file_exists($txt)) {
-        $caption = file_get_contents($txt);
+        $caption = rtrim(file_get_contents($txt));
     } else {
-        $caption = pathinfo($file, PATHINFO_FILENAME);
+        $caption = rtrim(pathinfo($file, PATHINFO_FILENAME));
     }
 
 echo <<< EOT
@@ -105,12 +103,11 @@ EOT;
 echo <<< EOT
     {
     "type": "label",
-        "text": "🚕",
+        "text": "🚕 🇯🇵",
         "style": {
           "font": "Lato",
-          "size": "19",
-          "align": "center",
-          "spacing": "15"
+          "size": "25",
+          "align": "center"
         }
             }
           ]

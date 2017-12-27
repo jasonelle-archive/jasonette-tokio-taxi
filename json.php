@@ -64,17 +64,6 @@ foreach (glob($ext) as $file) {
 shuffle($files);
 $files = array_slice($files, -$number);
 
-// Check whether the last photo has the accompanying text file,
-// then read the file's contents into the $end_caption variable.
-// If the file doesn't exist, set $end_caption to the file name.
-// $end_caption is formatted differently.
-$end_txt = pathinfo(end($files), PATHINFO_FILENAME).".txt";
-if (file_exists($end_txt)) {
-    $end_caption = rtrim(file_get_contents($end_txt));
-    } else {
-    $end_caption = pathinfo(end($files), PATHINFO_FILENAME);
-    }
-
 foreach ($files as &$file) {
 
     // Check whether a photo has the accompanying text file,

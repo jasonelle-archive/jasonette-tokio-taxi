@@ -5,7 +5,7 @@ $url = "https://play.google.com/store/books/details/Dmitri_Popov_Tokyo_Taxi_Ligh
 $title = "Tōkyō Taxi Lights";
 $description = "Tōkyō Taxi Lights photo book companion app";
 $number = 5; // number of photos to display
-$ext = "*.jpeg"; // File extension with the wild card
+$ext = "jpeg"; // File extension
 
 echo <<< EOT
     {
@@ -34,7 +34,7 @@ echo <<< EOT
       "header": {
         "title": "$title",
 	"style": {
-          "font": "Lato",
+          "font": "Lato Bold 700",
           "size": "25"
         },
         "menu": {
@@ -56,7 +56,7 @@ EOT;
 
 // Read all files in the directory into the $files array
 $files = array();
-foreach (glob($ext) as $file) {
+foreach (glob("*.$ext") as $file) {
   $files[] = $file;
 }
 
@@ -92,10 +92,10 @@ EOT;
 echo <<< EOT
     {
     "type": "label",
-        "text": "🚕 🇯🇵",
+        "text": "Made with 🚕 in 🇯🇵",
         "style": {
           "font": "Lato",
-          "size": "25",
+          "size": "15",
           "align": "center"
         }
             }

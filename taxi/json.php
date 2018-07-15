@@ -65,15 +65,16 @@ shuffle($files);
 $files = array_slice($files, -$number);
 
 foreach ($files as &$file) {
+    $exif = exif_read_data($file, 0, true);
 
     // Check whether a photo has the accompanying text file,
     // then read the file's contents into the $caption variable.
     // If the file doesn't exist, set $caption to the file name.
     $txt = pathinfo($file, PATHINFO_FILENAME).".txt";
     if (file_exists($txt)) {
-        $caption = rtrim(file_get_contents($txt));
+        $caption = rtrim(file_get_contents($txt))." ".$exif['COMMENT']['0'];
     } else {
-        $caption = rtrim(pathinfo($file, PATHINFO_FILENAME));
+        $caption = $exif['COMMENT']['0'];
     }
 
 echo <<< EOT
